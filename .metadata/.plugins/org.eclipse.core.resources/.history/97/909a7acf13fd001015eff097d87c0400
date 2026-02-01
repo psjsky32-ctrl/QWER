@@ -1,0 +1,27 @@
+package com.ktds.homework.management;
+
+public class MartTest {
+	
+	public static void main(String[] args) {
+		
+//		int point = 1_000_000;
+//		int usePoint = (int)(Math.random() * point + 1);
+//		System.out.println(usePoint);
+		
+		Guest guest = new Guest(200_000, 0);
+		Guest guest2 = new VIP(300_000, 300);
+		Guest guest3 = new VVIP(300_000, 0);
+		
+		
+		AbstractMart mart = new DepartmentStore(1500);
+		mart.sell(guest, 5, 20000);
+		mart.sell(guest2, 5, 30000);
+		mart.sell(guest3, 5, 40000);
+		
+		System.out.println(guest);
+		System.out.println(guest2);
+		System.out.println(guest3);
+		
+	}
+	
+}

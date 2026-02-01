@@ -1,0 +1,15 @@
+package com.ktds.homework.management.qqq;
+
+
+public class Q1152 {
+
+	public static void main(String[] args) {
+		
+		String a = "The last character is a blank";
+		String[] c = a.split(" ");
+		
+		System.out.println(c.length);
+		
+	}
+
+}

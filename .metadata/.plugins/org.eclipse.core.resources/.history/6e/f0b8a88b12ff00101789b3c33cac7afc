@@ -1,0 +1,39 @@
+package com.ktds.homework.management;
+
+import com.ktds.homework.management.custom.*;
+
+public class RestaurantTest {
+	public static void main(String[] args) {
+		try {
+			Customer customer = new Customer();
+			customer.Status(30, 20); // 초기 상태
+
+			Menu[] menus = { new Menu("제육볶음", 20, 0, 6000), new Menu("돈까스", 25, 0, 6500), new Menu("국밥", 15, 0, 5000),
+					new Menu("참이슬", 0, 10, 4000), new Menu("처음처럼", 0, 10, 4000), new Menu("진로", 0, 10, 4000) };
+
+			Restaurant restA = new Restaurant("A식당", 50, 60);
+
+			// 1. 식당 입장 가능 여부 체크 (예외 발생 가능)
+			restA.checkAcceptance(customer);
+
+			// 2. 주문 로직 (배부름/취함 수치가 넘어가면 여기서도 throw 가능하도록 로직 보완 가능)
+			int totalPrice = 0;
+			totalPrice += customer.order(menus[0], 3);
+			// menus[10] 처럼 잘못된 인덱스 접근 시 ArrayIndexOutOfBoundsException 발생
+
+			System.out.println("주문 성공!");
+			}
+		
+
+			catch (FullException e) {
+	            System.err.println("[과식 주의] " + e.getMessage());
+	        } catch (DrunkenException e) {
+	            System.err.println("[만취 주의] " + e.getMessage());
+	        } catch (StockException e) {
+	            System.err.println("[재고 부족] " + e.getMessage());
+	        } catch (MoneyException e) {
+	            System.err.println("[잔액 부족] " + e.getMessage());
+	        } finally {
+			System.out.println("프로그램을 종료합니다.");
+		}
+	}}

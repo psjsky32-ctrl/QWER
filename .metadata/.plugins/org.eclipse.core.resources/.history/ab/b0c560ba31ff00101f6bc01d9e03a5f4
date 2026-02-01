@@ -1,0 +1,38 @@
+package com.ktds.homework.management;
+
+import com.ktds.homework.management.custom.*;
+
+/**
+ * A 식당의 사장은 배가 부른 손님과 과하게 취한 손님에게는 주문을 받지 않기로 유명합니다. 사장님은 배부름이 50 보다 크면 손님을
+ * 받지않는다 사장님은 알콜 비율 60 보다 높으면 손님을 받지 않는다. A 식당의 사장은 손님의 배부름 정도와 취함 정도로 주문을 받을지
+ * 판단합니다 B 식당 사장님은 배부름이 80보다 크면 손님을 받지 않는다 B 식당 사장님은 알콜 비율 80보다 크면 손님을 받지 않는다
+ */
+public class Restaurant {
+	private String name;
+	private int fullLimit;
+	private int alcoholLimit;
+
+	public Restaurant(String name, int fullLimit, int alcoholLimit) {
+		this.name = name;
+		this.fullLimit = fullLimit;
+		this.alcoholLimit = alcoholLimit;
+	}
+
+	public void checkAcceptance(Customer customer, Menu menu, int count) {
+        if (customer == null) {
+            throw new NullPointerException("고객 정보가 없습니다.");
+        }
+        
+        if (customer.getCustomerFull() > this.fullLimit) {
+            throw new FullException("배가 너무 불러서 더 이상 드실 수 없습니다!");
+        }
+        
+        if (customer.getAlcoholFull() > this.alcoholLimit) {
+            throw new DrunkenException("취기가 너무 올라서 주문이 불가능합니다!");
+        }
+
+        if (menu.getStock() < count) {
+            throw new StockException(menu.getMenuName() + "의 재고가 부족합니다!");
+        }
+    }
+}

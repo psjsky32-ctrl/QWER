@@ -1,0 +1,51 @@
+package com.ktds.homework.management;
+
+import com.ktds.homework.management.custom.*;
+
+/**
+ *  1.새삥인 손님
+ *  2.중고인 손님
+ *  A식당 사장님은 배부름이 50 보다 크면 손님을 받지않는다
+ *  손님이 음식을 주문하면 음식마다의 무게만큼 배부름 정도가 채워집니다.
+ *  CustomerFull에 menuWeight *orderMenuCount 만큼을 더해준다.  
+ *  A식당 사장님은 알콜 비율 60 보다 높으면 손님을 받지 않는다
+ *  손님이 술을 주문하면 술 마다의 알콜 비율의 10% 만큼 취함 정도가 증가합니다.
+ *  alcoholWeight = 10
+ *  alcoholFull에 = alcoholWeight * alcoholCount
+ */
+
+public class Customer {
+    private int customerFull;
+    private int alcoholFull;
+    private int money = 50000; // 지갑 상황 추가
+
+    public void Status(int full, int alcohol) {
+        this.customerFull = full;
+        this.alcoholFull = alcohol;
+    }
+
+    public int order(Menu menu, int count) {
+        if (menu == null) throw new NullPointerException("메뉴 정보가 없습니다.");
+        
+        int totalPrice = menu.getPrice() * count;
+        if (this.money < totalPrice) {
+            throw new MoneyException("잔액이 부족합니다! (족구한 금액: " + (totalPrice - money) + "원)");
+        }
+
+        if (menu.getAlcohol() > 0) {
+            this.alcoholFull += menu.getAlcoholWeight() * count;
+        } else {
+            this.customerFull += menu.getMenuWeight() * count;
+        }
+        
+        this.money -= totalPrice;
+        menu.setStock(menu.getStock() - count); // 재고 차감
+        
+        System.out.println(menu.getMenuName() + " " + count + "개 주문 완료.");
+        return totalPrice;
+    }
+
+    // Getters
+    public int getCustomerFull() { return customerFull; }
+    public int getAlcoholFull() { return alcoholFull; }
+}

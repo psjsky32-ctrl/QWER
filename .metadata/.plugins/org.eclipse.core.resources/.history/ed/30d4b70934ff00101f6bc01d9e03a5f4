@@ -1,0 +1,44 @@
+package com.ktds.homework.management;
+
+import com.ktds.homework.management.custom.*;
+
+public class RestaurantTest {
+	public static void main(String[] args) {
+		try {
+			Customer customer = new Customer();
+			customer.Status(30, 20);
+
+			Menu[] menus = { new Menu("제육볶음", 20, 0, 6000, 10), new Menu("돈까스", 25, 0, 6500, 10),
+					new Menu("국밥", 15, 0, 5000, 10), new Menu("참이슬", 0, 10, 4000, 10),
+					new Menu("처음처럼", 0, 10, 4000, 10), new Menu("진로", 0, 10, 4000, 10) };
+
+			Restaurant restA = new Restaurant("A식당", 50, 60);
+
+			// 1. 메뉴 선택 시 발생할 수 있는 인덱스 예외 처리 예시
+			int menuIndex = 1;
+			if (menuIndex >= menus.length || menuIndex < 0) {
+				throw new ArrayIndexOutOfBoundsException("존재하지 않는 메뉴");
+			}
+
+			// 2. 주문 가능 여부 체크
+			restA.checkAcceptance(customer, menus[5], 3);
+
+			// 3. 실제 주문 진행
+			int totalPrice = 0;
+			totalPrice += customer.order(menus[5], 3);
+
+			System.out.println("총 주문 금액: " + totalPrice);
+			System.out.println("주문 성공!");
+
+
+		} catch (FullException fe) {
+			System.out.println(fe.getMessage());
+		} catch (DrunkenException dke) {
+			System.out.println(dke.getMessage());
+		} catch (StockException se) {
+			System.out.println(se.getMessage());
+		} catch (MoneyException me) {
+			System.out.println(me.getMessage());
+		}
+	}
+}
