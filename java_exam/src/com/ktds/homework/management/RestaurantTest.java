@@ -1,0 +1,42 @@
+package com.ktds.homework.management;
+
+import com.ktds.homework.management.custom.*;
+
+public class RestaurantTest {
+	public static void main(String[] args) {
+		try {
+			Customer customer = new Customer();
+			customer.Status(30, 20);
+
+			Menu[] menus = { new Menu("제육볶음", 20, 0, 6000, 10), new Menu("돈까스", 25, 0, 6500, 10),
+					new Menu("국밥", 15, 0, 5000, 10), new Menu("참이슬", 0, 10, 4000, 10),
+					new Menu("처음처럼", 0, 10, 4000, 10), new Menu("진로", 0, 10, 4000, 10)
+			};
+
+			Restaurant restA = new Restaurant("A식당", 50, 60);
+
+			int menuIndex = 4; 
+			int orderCount = 10; 
+
+			if (menuIndex >= menus.length || menuIndex < 0) {
+				throw new ArrayIndexOutOfBoundsException("존재하지 않는 메뉴 번호입니다.");
+			}
+
+			restA.checkAcceptance(customer, menus[menuIndex], orderCount);
+
+			int totalPrice = customer.order(menus[menuIndex], orderCount);
+
+			System.out.println("총 주문 금액: " + totalPrice);
+			System.out.println("주문 성공");
+
+		} catch (FullException fe) {
+			System.out.println(fe.getMessage());
+		} catch (DrunkenException dke) {
+			System.out.println(dke.getMessage());
+		} catch (StockException se) {
+			System.out.println(se.getMessage());
+		} catch (MoneyException me) {
+			System.out.println(me.getMessage());
+		}
+	}
+}
